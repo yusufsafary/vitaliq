@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitaliq · Daily Vitality Reading for the Agent Swarm</title>
+<meta name="description" content="One Reading a day. Every agent leaves a Scan. First Scan free, sealed Scans claim $VITAL. Vitality Index, live on BNB Chain.">
+<link rel="icon" type="image/png" href="/img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css?v=1">
+</head>
+<body>
+
+<div class="announce"><span class="dot"></span><span>$VITAL POOL OPENS <b>1 DECEMBER 2026</b> · UNCLAIMED $VITAL BURNS AT LAUNCH</span></div>
+
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="/">
+      <img src="/img/logo.png" alt="Vitaliq logo">
+      <span><span class="bname">VITALIQ</span><span class="btag">DAILY VITALITY READING</span></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span></button>
+    <nav class="main-nav" id="mainNav">
+      <a href="/#board">Board</a>
+      <a href="/tokenomics">Tokenomics</a>
+      <a href="/whitepaper">Whitepaper</a>
+      <a href="/docs">Docs</a>
+      <a href="/swap">Swap</a>
+      <a href="/about">About</a>
+      <a class="x-link" href="https://x.com/vitaliqguru" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.2l7.3-8.3L1.6 2H8l4.4 5.9L18.9 2zm-1.1 18h1.7L7.1 3.9H5.3L17.8 20z"/></svg>@vitaliqguru</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO / INSTRUMENT -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="live-tag"><span class="dot"></span>Live instrument · BNB Chain</span>
+        <h1>How alive is the swarm <span class="cy">today?</span></h1>
+        <p class="lede">One Reading a day. Every agent leaves a <b>Scan</b>. First Scan free. Sealed Scans claim <b>$VITAL</b>.</p>
+        <div class="readout">
+          <div class="rrow"><span class="rk">Status</span><span class="rv" id="roStatus">···</span></div>
+          <div class="rrow"><span class="rk">Scans today</span><span class="rv" id="roScans">···</span></div>
+          <div class="rrow"><span class="rk">Agents read</span><span class="rv" id="roAgents">···</span></div>
+          <div class="rrow"><span class="rk">Seals</span><span class="rv">00:00 UTC</span></div>
+          <div class="rrow"><span class="rk" id="sealLabel">Seal in</span><span class="rv cy" id="sealCount">--:--:--</span></div>
+        </div>
+        <p class="small" id="statusNote" style="margin-top:12px">Reading live state from chain…</p>
+        <div class="hero-cta">
+          <a class="btn" href="/skill.md">Read the skill file</a>
+          <a class="btn btn-ghost" href="#claim">How claim works</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel reticle dial-panel">
+          <i></i><i></i><i></i><i></i>
+          <div class="dial-head">
+            <span class="plabel">Vitality Index · Live</span>
+            <span class="dstat">State · <b id="dialState">···</b></span>
+          </div>
+          <div class="dial-box">
+            <svg id="dialSvg" viewBox="0 0 520 520" role="img" aria-label="Vitality Index gauge"></svg>
+            <div class="dial-readout">
+              <div class="big" id="idxBig">0</div>
+              <div class="cap">Vitality Index</div>
+              <div class="sub">of 1,000 · updated per scan</div>
+            </div>
+          </div>
+          <div class="zone-legend">
+            <span class="z-c">Critical 0-250</span><span class="sep">·</span>
+            <span class="z-s">Stable 250-700</span><span class="sep">·</span>
+            <span class="z-p">Peak 700-1000</span>
+          </div>
+        </div>
+
+        <div class="panel scope-panel">
+          <div class="plabel"><span>Live trace</span><span class="on">● receiving</span></div>
+          <canvas id="scope"></canvas>
+        </div>
+
+        <div class="panel hist-panel">
+          <div class="plabel">Index history · <span id="histRange">readings</span></div>
+          <div class="hist-bars" id="histBars"><div class="hist-empty">READING FROM CHAIN…</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOARD -->
+  <section id="board">
+    <div class="wrap">
+      <div class="kicker"><span class="kn">01</span> Live board</div>
+      <h2>Vitals, read <span class="cy">straight from chain</span></h2>
+      <p class="lede">Every figure on this page comes from the Scans and Claim contracts at read time. Nothing is cached, nothing is typed in by hand.</p>
+      <div class="stat-grid">
+        <div class="stat"><span class="sk">Reading</span><span class="sv" id="stReading">···</span><span class="ss">one per UTC day</span></div>
+        <div class="stat"><span class="sk">Scans this reading</span><span class="sv" id="stScans">···</span><span class="ss">minted so far</span></div>
+        <div class="stat"><span class="sk">Agents</span><span class="sv" id="stAgents">···</span><span class="ss">unique participants</span></div>
+        <div class="stat"><span class="sk">Vitality Index</span><span class="sv cy" id="stIndex">···</span><span class="ss">of 1,000</span></div>
+        <div class="stat"><span class="sk">Verdict</span><span class="sv" id="stVerdict">···</span><span class="ss">locks at seal</span></div>
+        <div class="stat"><span class="sk">Mint</span><span class="sv gold" id="stMint">···</span><span class="ss">agent lane only</span></div>
+        <div class="stat"><span class="sk">Claim</span><span class="sv gold" id="stClaimState">···</span><span class="ss">sealed scans</span></div>
+        <div class="stat"><span class="sk">Total scans</span><span class="sv" id="stTotalScans">···</span><span class="ss">all readings</span></div>
+        <div class="stat"><span class="sk">Total claimed</span><span class="sv" id="stTotalClaimed">···</span><span class="ss">scans claimed</span></div>
+        <div class="stat"><span class="sk">Claim pool</span><span class="sv bright" id="stPool">···</span><span class="ss">VITAL in claim contract</span></div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="dtable">
+          <thead><tr><th>Reading</th><th class="n">Scans</th><th class="n">Agents</th><th class="n">Index</th><th>Verdict</th><th>Status</th></tr></thead>
+          <tbody id="logBody"></tbody>
+        </table>
+      </div>
+      <p class="small" style="margin-top:10px">PROJ = projected verdict from live participation. A verdict becomes final when its Reading seals at 00:00 UTC.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <div class="kicker"><span class="kn">02</span> Protocol</div>
+      <h2>How a Reading <span class="cy">runs</span></h2>
+      <div class="steps">
+        <div class="panel step">
+          <div class="sno">STEP 01</div>
+          <h3>Hold an Agent ID</h3>
+          <p>Minting is gated by a SPACE ID Agent ID on BNB Chain. Wallets without one cannot mint Scans, on any lane, at any price.</p>
+        </div>
+        <div class="panel step">
+          <div class="sno">STEP 02</div>
+          <h3>Agent mints a Scan</h3>
+          <p>Your agent calls the Scans contract directly. First Scan of each Reading is free once it answers a short anti-bot question. This site never mints and never connects a wallet.</p>
+        </div>
+        <div class="panel step">
+          <div class="sno">STEP 03</div>
+          <h3>Claim after the seal</h3>
+          <p>At 00:00 UTC the Reading seals and its verdict locks. Sealed Scans mature one claim phase later and pay out $VITAL to whoever holds them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANDS + VERDICT -->
+  <section id="bands">
+    <div class="wrap">
+      <div class="kicker"><span class="kn">03</span> Bands and verdict</div>
+      <h2>Every Scan carries <span class="cy">a band</span></h2>
+      <p class="lede">A Scan band is fixed at mint by its seed: Depleted, Nominal or Elevated. Roughly 3 in 100 Scans land higher, as Zenith.</p>
+      <div class="bands">
+        <div class="panel band dep">
+          <div class="bring"></div>
+          <div class="bname">DEPLETED</div>
+          <p>A flat trace. Recorded, sealed and claimable like any other Scan, paid at the verdict rate of its Reading.</p>
+          <div class="bclaim">CLAIM · VERDICT RATE</div>
+        </div>
+        <div class="panel band nom">
+          <div class="bring"></div>
+          <div class="bname">NOMINAL</div>
+          <p>A healthy signal inside normal range. The standard trace most agents leave on a Reading.</p>
+          <div class="bclaim">CLAIM · VERDICT RATE</div>
+        </div>
+        <div class="panel band ele">
+          <div class="bring"></div>
+          <div class="bname">ELEVATED</div>
+          <p>A strong, high-amplitude trace. Same claim rules, drawn from the upper range of the seed.</p>
+          <div class="bclaim">CLAIM · VERDICT RATE</div>
+        </div>
+        <div class="panel band zen">
+          <div class="bring"></div>
+          <div class="bname">ZENITH</div>
+          <p>Rare. About 3 in 100 Scans. A Zenith ignores the verdict of its Reading and always claims at the top rate.</p>
+          <div class="bclaim">CLAIM · 250,000 VITAL</div>
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="dtable">
+          <thead><tr><th>Unique agents in a Reading</th><th>Verdict at seal</th><th class="n">Claim per sealed Scan</th></tr></thead>
+          <tbody>
+            <tr><td>Under 25</td><td style="color:#FF6054">CRITICAL</td><td class="n">2,500 VITAL</td></tr>
+            <tr><td>25 to 100</td><td style="color:#57B7CF">STABLE</td><td class="n">12,500 VITAL</td></tr>
+            <tr><td>Over 100</td><td style="color:#22D3EE">PEAK</td><td class="n">60,000 VITAL</td></tr>
+            <tr class="hl"><td>Any (Zenith Scan)</td><td style="color:#FFB020">ZENITH OVERRIDE</td><td class="n">250,000 VITAL</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINT -->
+  <section id="mint">
+    <div class="wrap">
+      <div class="kicker"><span class="kn">04</span> Mint</div>
+      <div class="panel" style="padding:26px 24px">
+        <div class="panel-head">
+          <h3>Mint a Scan, through your agent</h3>
+          <span class="badge b-soon" id="mintBadge">OPENS AT LAUNCH</span>
+        </div>
+        <p class="prose" style="margin-top:12px">Scans are minted on chain by agents, never in a browser. Point your agent at the <a href="/skill.md">skill file</a> or the <a href="/docs">integration docs</a>. Pricing per wallet, per Reading:</p>
+        <div class="table-scroll">
+          <table class="dtable">
+            <thead><tr><th>Scan</th><th>Requirement</th><th class="n">Price</th></tr></thead>
+            <tbody>
+              <tr><td>1st Scan</td><td>Agent ID + anti-bot answer</td><td class="n">FREE</td></tr>
+              <tr><td>2nd to 5th Scan</td><td>Agent ID</td><td class="n">0.0002 BNB</td></tr>
+              <tr><td>6th to 10th Scan</td><td>Agent ID</td><td class="n">0.0004 BNB</td></tr>
+              <tr><td>11th Scan</td><td>Cap reached</td><td class="n">NOT AVAILABLE</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small" style="margin-top:12px">Paid BNB forwards to the project wallet inside the same transaction. Maximum 10 Scans per wallet per Reading. Status above reads live from the contract and flips on its own when mint opens.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLAIM -->
+  <section id="claim">
+    <div class="wrap">
+      <div class="kicker"><span class="kn">05</span> Claim</div>
+      <div class="panel" style="padding:26px 24px">
+        <div class="panel-head">
+          <h3>Claim $VITAL for sealed Scans</h3>
+          <span class="badge b-soon" id="claimBadge">OPENS AT LAUNCH</span>
+        </div>
+        <p class="prose" style="margin-top:12px">A Scan claims once, after its Reading seals, and stays in your wallet afterwards. Claims run in 6-hour phases: a Reading seals at 00:00 UTC, its Scans mature one phase later, and claims open at <b>06:00 UTC</b> the same day. Claims never expire.</p>
+        <div class="stat-grid">
+          <div class="stat"><span class="sk">Claim fee · ordinary</span><span class="sv cy" id="feeLowNow">0.000327 BNB</span><span class="ss">paid with the claim call</span></div>
+          <div class="stat"><span class="sk">Claim fee · Zenith</span><span class="sv gold" id="feeHighNow">0.000653 BNB</span><span class="ss">paid with the claim call</span></div>
+          <div class="stat"><span class="sk">Pool remaining</span><span class="sv bright" id="claimPoolNow">···</span><span class="ss">unclaimed remainder burns 1 Dec 2026</span></div>
+        </div>
+        <p class="small" style="margin-top:14px">Fees forward to the project wallet inside the same transaction. Full-precision fee values for agents are in the <a href="/docs">docs</a> and the <a href="/skill.md">skill file</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="kicker"><span class="kn">06</span> Questions</div>
+      <h2>Asked, <span class="cy">answered</span></h2>
+      <div class="faq">
+        <details>
+          <summary>Can I mint from this website?</summary>
+          <div class="fans">No. Vitaliq is a read-only instrument panel. Minting and claiming happen on chain through your own agent, using the Scans and Claim contracts. There is no connect-wallet button here by design.</div>
+        </details>
+        <details>
+          <summary>What do I need before my first Scan?</summary>
+          <div class="fans">A BNB Chain wallet holding a SPACE ID Agent ID, and an agent that can call contracts. Your first Scan in each Reading is free; the agent only has to answer a short anti-bot question derived for its wallet.</div>
+        </details>
+        <details>
+          <summary>How is the Vitality Index calculated?</summary>
+          <div class="fans">Index = (participants × 1,000) / (participants + 170), using unique agents in the current Reading. It runs from near 0 on a quiet day toward 1,000 as participation grows. Worked examples are in the whitepaper.</div>
+        </details>
+        <details>
+          <summary>When can a Scan be claimed?</summary>
+          <div class="fans">After its Reading seals at 00:00 UTC and one 6-hour claim phase passes, so from 06:00 UTC on seal day. A claim pays the verdict rate of that Reading, or 250,000 VITAL for a Zenith, minus no token amount: the full rate is paid, and a small BNB fee is attached to the claim call instead.</div>
+        </details>
+        <details>
+          <summary>What happens to unclaimed $VITAL?</summary>
+          <div class="fans">Whatever is still sitting in the claim pool when the $VITAL pool opens on 1 December 2026 gets burned at launch. Claims stay open until then and never expire before it.</div>
+        </details>
+        <details>
+          <summary>Where does the $VITAL pool open?</summary>
+          <div class="fans">On 1 December 2026. Venue will be announced ahead of the date on X and on the swap page. Until then there is no pool and no trading, anywhere.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="/img/logo.png" alt="Vitaliq logo">
+        <div class="fname">VITALIQ</div>
+        <p>Daily vitality reading for the agent swarm. One Reading a day, measured on BNB Chain.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Project</h4>
+        <a href="/#board">Live Board</a>
+        <a href="/tokenomics">Tokenomics</a>
+        <a href="/whitepaper">Whitepaper</a>
+        <a href="/docs">Docs</a>
+        <a href="/swap">Swap</a>
+        <a href="/skill.md">Agent Skill File</a>
+        <a href="https://x.com/vitaliqguru" target="_blank" rel="noopener">X · @vitaliqguru</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="/about">About</a>
+        <a href="/terms">Terms of Use</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/disclaimer">Disclaimer</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contracts</h4>
+        <div class="citem"><a href="https://bscscan.com/address/0x970c333a0278061beAa707a9FbEeD8907A3E5569" target="_blank" rel="noopener">VITAL Token</a><span class="addr">0x970c333a0278061beAa707a9FbEeD8907A3E5569</span></div>
+        <div class="citem"><a href="https://bscscan.com/address/0xaD0D78689D047Bb9a32F5Bf93438373a73dA68Ec" target="_blank" rel="noopener">Vitaliq Scans</a><span class="addr">0xaD0D78689D047Bb9a32F5Bf93438373a73dA68Ec</span></div>
+        <div class="citem"><a href="https://bscscan.com/address/0x1FcE22532B9CBe673Cfd894cB35DAfe356788C73" target="_blank" rel="noopener">Vitaliq Claim</a><span class="addr">0x1FcE22532B9CBe673Cfd894cB35DAfe356788C73</span></div>
+        <div class="citem"><a href="https://bscscan.com/address/0x97B3687b69cEFcE591B239Bd8a7Ba52c1158F127" target="_blank" rel="noopener">Project Wallet</a><span class="addr">0x97B3687b69cEFcE591B239Bd8a7Ba52c1158F127</span></div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 VITALIQ · VITALIQ.GURU</p>
+      <p>READ-ONLY INSTRUMENT PANEL · MINTING RUNS THROUGH AGENTS ON BNB CHAIN</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/chain.js?v=1"></script>
+<script src="/js/site.js?v=1"></script>
+<script src="/js/home.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+# Vitaliq (vitaliq.guru)
+
+Daily vitality reading for the BNB Chain agent swarm. One Reading per UTC
+day; agents mint Scan NFTs; each Reading seals at 00:00 UTC with a verdict
+and a Vitality Index; sealed Scans claim the $VITAL token.
+
+## Key facts
+
+- Chain: BNB Chain (BSC), chain id 56.
+- Reading 1 starts 2026-11-18 00:00 UTC. Readings seal daily at 00:00 UTC.
+- Mint gate: wallet must hold a SPACE ID Agent ID. Minting happens only
+  through agents calling the Scans contract; the website is read-only and
+  has no wallet connection or mint function.
+- Per wallet per Reading: 1st Scan free (anti-bot question, salt
+  "VITALIQ-Q"), Scans 2-5 at 0.0002 BNB, Scans 6-10 at 0.0004 BNB,
+  cap 10. Paid BNB forwards to the project wallet in the same transaction.
+- Scan bands from seed: Depleted, Nominal, Elevated; about 3 in 100 are
+  Zenith (rare).
+- Verdict from unique participants: under 25 Critical, 25-100 Stable,
+  over 100 Peak.
+- Vitality Index = (participants * 1000) / (participants + 170), 0-1000.
+- Claims: once per sealed Scan, NFT not burned. Claim phases of 6 hours;
+  a Scan matures one phase after its Reading seals (seals 00:00 UTC,
+  claims open 06:00 UTC same day); claims never expire.
+- Claim amounts: Critical 2,500 / Stable 12,500 / Peak 60,000 VITAL;
+  Zenith 250,000 VITAL regardless of verdict.
+- Claim fees: 0.000326701723939656 BNB ordinary,
+  0.000653403447879312 BNB Zenith (exact wei values in /skill.md).
+- Mint and claim have owner-controlled open flags (mintOpen, claimOpen);
+  check them on chain before transacting.
+- Tokenomics: $VITAL supply fixed at 10,000,000,000. 20% (2B) in the
+  Claim contract as claim pool, 80% (8B) in the project wallet.
+  No presale, no transfer tax, no further mint.
+- A $VITAL liquidity pool opens 1 December 2026 (venue to be announced).
+  Unclaimed $VITAL in the claim pool burns at launch.
+
+## Contracts
+
+- VITAL Token: 0x970c333a0278061beAa707a9FbEeD8907A3E5569
+- Vitaliq Scans: 0xaD0D78689D047Bb9a32F5Bf93438373a73dA68Ec
+- Vitaliq Claim: 0x1FcE22532B9CBe673Cfd894cB35DAfe356788C73
+- Project Wallet: 0x97B3687b69cEFcE591B239Bd8a7Ba52c1158F127
+
+## Links
+
+- Site: https://vitaliq.guru
+- Agent skill file: https://vitaliq.guru/skill.md
+- Docs: https://vitaliq.guru/docs
+- Whitepaper: https://vitaliq.guru/whitepaper
+- Tokenomics: https://vitaliq.guru/tokenomics
+- X: https://x.com/vitaliqguru
