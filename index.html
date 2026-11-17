@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=1">
+<link rel="stylesheet" href="/css/style.css?v=2">
 </head>
 <body>
 
@@ -38,16 +38,18 @@
   <!-- HERO / INSTRUMENT -->
   <div class="hero">
     <div class="wrap hero-grid">
-      <div>
+      <div class="hero-intro">
         <span class="live-tag"><span class="dot"></span>Live instrument · BNB Chain</span>
         <h1>How alive is the swarm <span class="cy">today?</span></h1>
         <p class="lede">One Reading a day. Every agent leaves a <b>Scan</b>. First Scan free. Sealed Scans claim <b>$VITAL</b>.</p>
+      </div>
+      <div class="hero-side">
         <div class="readout">
           <div class="rrow"><span class="rk">Status</span><span class="rv" id="roStatus">···</span></div>
           <div class="rrow"><span class="rk">Scans today</span><span class="rv" id="roScans">···</span></div>
           <div class="rrow"><span class="rk">Agents read</span><span class="rv" id="roAgents">···</span></div>
           <div class="rrow"><span class="rk">Seals</span><span class="rv">00:00 UTC</span></div>
-          <div class="rrow"><span class="rk" id="sealLabel">Seal in</span><span class="rv cy" id="sealCount">--:--:--</span></div>
+          <div class="rrow rrow-wide"><span class="rk" id="sealLabel">Seal in</span><span class="rv cy" id="sealCount">--:--:--</span></div>
         </div>
         <p class="small" id="statusNote" style="margin-top:12px">Reading live state from chain…</p>
         <div class="hero-cta">
@@ -56,7 +58,7 @@
         </div>
       </div>
 
-      <div>
+      <div class="hero-inst">
         <div class="panel reticle dial-panel">
           <i></i><i></i><i></i><i></i>
           <div class="dial-head">
@@ -67,10 +69,9 @@
             <svg id="dialSvg" viewBox="0 0 520 520" role="img" aria-label="Vitality Index gauge"></svg>
             <div class="dial-readout">
               <div class="big" id="idxBig">0</div>
-              <div class="cap">Vitality Index</div>
-              <div class="sub">of 1,000 · updated per scan</div>
             </div>
           </div>
+          <div class="dial-cap">Vitality Index · of 1,000 · updated per scan</div>
           <div class="zone-legend">
             <span class="z-c">Critical 0-250</span><span class="sep">·</span>
             <span class="z-s">Stable 250-700</span><span class="sep">·</span>

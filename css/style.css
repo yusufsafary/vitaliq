@@ -148,22 +148,30 @@ h3{font-size:19px}
 .btn-ghost{background:transparent;color:var(--cyan)}
 .btn-ghost:hover{background:rgba(34,211,238,.08);color:var(--bright)}
 
-/* readout table (hero) */
-.readout{border-top:1px solid var(--line);margin-top:26px}
-.readout .rrow{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
-  padding:11px 2px;border-bottom:1px solid var(--line)}
-.readout .rk{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;color:var(--slate);text-transform:uppercase}
-.readout .rv{font-family:var(--mono);font-size:19px;color:var(--white);text-align:right}
+/* readout (hero): compact 2-col instrument strip on mobile, table rows on desktop */
+.readout{border-top:1px solid var(--line);margin-top:2px;display:grid;
+  grid-template-columns:1fr 1fr;column-gap:20px}
+.readout .rrow{display:flex;flex-direction:column;gap:3px;
+  padding:10px 0 9px;border-bottom:1px solid var(--line);min-width:0}
+.readout .rrow-wide{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:baseline}
+.readout .rk{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--slate);text-transform:uppercase}
+.readout .rv{font-family:var(--mono);font-size:18px;color:var(--white);text-align:left}
+.readout .rrow-wide .rv{text-align:right}
+@media(min-width:1020px){
+  .readout{display:block;margin-top:26px}
+  .readout .rrow{flex-direction:row;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 2px}
+  .readout .rv{font-size:19px;text-align:right}
+}
 .readout .rv.cy{color:var(--cyan)} .readout .rv.gold{color:var(--gold)} .readout .rv.coral{color:var(--coral)}
 
 /* stat grid */
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:26px}
 .stat{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
   border-radius:4px;padding:16px 16px 14px;min-width:0}
-.stat .sk{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--slate);
-  display:block;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.stat .sv{font-family:var(--mono);font-size:clamp(20px,2.6vw,27px);color:var(--white);line-height:1.1;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .sk{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  display:block;margin-bottom:8px;line-height:1.45}
+.stat .sv{font-family:var(--mono);font-size:clamp(16px,4.6vw,27px);color:var(--white);line-height:1.1;
+  white-space:nowrap}
 .stat .sv.cy{color:var(--cyan)} .stat .sv.gold{color:var(--gold)} .stat .sv.coral{color:var(--coral)} .stat .sv.bright{color:var(--bright)}
 .stat .ss{font-family:var(--mono);font-size:11px;color:var(--slate);display:block;margin-top:6px}
 
@@ -261,8 +269,15 @@ pre .cm{color:var(--slate2)}
 
 /* ---------- hero / instrument ---------- */
 .hero{padding:44px 0 10px}
-.hero-grid{display:grid;grid-template-columns:1fr;gap:38px;align-items:start}
-@media(min-width:1020px){.hero-grid{grid-template-columns:1.02fr .98fr;gap:48px}}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:30px;align-items:start;
+  grid-template-areas:"intro" "inst" "side"}
+.hero-intro{grid-area:intro;min-width:0}
+.hero-inst{grid-area:inst;min-width:0}
+.hero-side{grid-area:side;min-width:0}
+@media(min-width:1020px){
+  .hero-grid{grid-template-columns:1.02fr .98fr;gap:40px 48px;
+    grid-template-areas:"intro inst" "side inst"}
+}
 .hero h1{font-size:clamp(40px,8.4vw,68px);text-transform:uppercase}
 .hero h1 .cy{color:var(--cyan);display:block}
 .hero .lede{margin-top:18px}
@@ -278,7 +293,7 @@ pre .cm{color:var(--slate2)}
 .dial-panel{padding:26px 18px 20px;background:
   radial-gradient(420px 420px at 50% 42%,rgba(34,211,238,.09),transparent 65%),
   linear-gradient(180deg,var(--panel2),var(--panel))}
-.dial-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:0 6px}
+.dial-head{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;padding:0 6px;flex-wrap:wrap}
 .dial-head .plabel{color:var(--cyan)}
 .dial-head .dstat{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--slate);text-transform:uppercase}
 .dial-head .dstat b{color:var(--bright);font-weight:500}
@@ -287,11 +302,11 @@ pre .cm{color:var(--slate2)}
 .spin-ring{transform-origin:260px 260px;animation:spin 70s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #needle{transition:none}
-.dial-readout{position:absolute;left:0;right:0;top:56%;text-align:center;pointer-events:none}
-.dial-readout .big{font-family:var(--mono);font-size:clamp(52px,13vw,76px);font-weight:600;line-height:1;color:var(--white);
+.dial-readout{position:absolute;left:0;right:0;top:57%;text-align:center;pointer-events:none}
+.dial-readout .big{font-family:var(--mono);font-size:clamp(40px,11vw,68px);font-weight:600;line-height:1;color:var(--white);
   text-shadow:0 0 26px rgba(34,211,238,.35)}
-.dial-readout .cap{font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--cyan);margin-top:7px;text-transform:uppercase}
-.dial-readout .sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--slate);margin-top:5px;text-transform:uppercase}
+.dial-cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--slate);
+  text-transform:uppercase;text-align:center;margin-top:2px}
 .zone-legend{display:flex;justify-content:center;gap:8px 20px;flex-wrap:wrap;margin-top:6px;
   font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .zone-legend .z-c{color:var(--coral)} .zone-legend .z-s{color:var(--steel)} .zone-legend .z-p{color:var(--cyan)}
@@ -341,9 +356,13 @@ pre .cm{color:var(--slate2)}
 @media(max-width:560px){
   section{padding:48px 0 4px}
   .wrap{padding:0 16px}
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:30px 0 6px}
+  .hero-grid{gap:24px}
+  .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .stat{padding:13px 12px 11px}
   .dial-panel{padding:20px 10px 16px}
-  .readout .rv{font-size:17px}
+  .hero-cta{margin-top:22px}
+  .hero-cta .btn{padding:14px 12px;font-size:13px}
 }
 @media(prefers-reduced-motion:reduce){
   .spin-ring{animation:none}
