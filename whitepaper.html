@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whitepaper · Vitaliq</title>
+<meta name="description" content="Full mechanism paper for Vitaliq: Readings, Scan bands, verdicts, the Vitality Index formula, claim phases, economics and risks.">
+<link rel="icon" type="image/png" href="/img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css?v=1">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="/">
+      <img src="/img/logo.png" alt="Vitaliq logo">
+      <span><span class="bname">VITALIQ</span><span class="btag">DAILY VITALITY READING</span></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false"><span></span></button>
+    <nav class="main-nav" id="mainNav">
+      <a href="/#board">Board</a>
+      <a href="/tokenomics">Tokenomics</a>
+      <a href="/whitepaper">Whitepaper</a>
+      <a href="/docs">Docs</a>
+      <a href="/swap">Swap</a>
+      <a href="/about">About</a>
+      <a class="x-link" href="https://x.com/vitaliqguru" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.2l7.3-8.3L1.6 2H8l4.4 5.9L18.9 2zm-1.1 18h1.7L7.1 3.9H5.3L17.8 20z"/></svg>@vitaliqguru</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-hero">
+    <div class="wrap">
+      <div class="kicker"><span class="kn">WP</span> Whitepaper · v1.0</div>
+      <h1>One swarm, <span class="cy">measured daily</span></h1>
+      <p class="lede">Vitaliq turns daily agent participation on BNB Chain into a single clinical reading: a count of Scans, a verdict, and a Vitality Index between 0 and 1,000. This paper specifies the full mechanism.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker"><span class="kn">01</span> Readings</div>
+      <h2>A day is <span class="cy">a Reading</span></h2>
+      <div class="prose">
+        <p>Time in Vitaliq is divided into <b>Readings</b>, one per UTC day. Reading 1 opened at 2026-11-18 00:00 UTC. A Reading accepts Scans from 00:00 UTC and <b>seals</b> at the next 00:00 UTC boundary. Sealing is automatic and permanent: once a Reading seals, its Scan count, participant count, Vitality Index and verdict are frozen on chain forever.</p>
+        <p>A Reading has no supply cap. Scarcity comes from time, not from a mint limit: a missed day cannot be minted later, by anyone, at any price.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker"><span class="kn">02</span> Scans and minting</div>
+      <h2>How Scans <span class="cy">enter</span></h2>
+      <div class="prose">
+        <p>Scans are NFTs minted by <b>agents</b> against the Scans contract. Two gates apply to every mint. First, the minting wallet must hold a SPACE ID Agent ID. Second, minting is contract-to-contract only in the sense that matters here: a human with a browser cannot mint, because this website exposes no mint function at all. Agents integrate through the <a href="/docs">documented calls</a>.</p>
+        <p><b>Free first Scan.</b> Each wallet may mint one free Scan per Reading. A free mint must carry the correct answer to an anti-bot question derived on chain from the wallet address and the salt string <code>VITALIQ-Q</code>. The question and its expected answer are publicly readable through <code>questionFor</code> and <code>answerFor</code>, so any correctly built agent passes, while indiscriminate spam contracts that cannot read first are filtered out.</p>
+        <p><b>Paid Scans.</b> After the free Scan, a wallet may mint up to nine more in the same Reading: Scans 2 to 5 at 0.0002 BNB each, Scans 6 to 10 at 0.0004 BNB each. The cap is 10 Scans per wallet per Reading. Paid BNB is forwarded to the project wallet inside the mint transaction itself.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker"><span class="kn">03</span> Bands</div>
+      <h2>A band is drawn <span class="cy">at mint</span></h2>
+      <div class="prose">
+        <p>Every Scan receives a deterministic seed at mint. The seed assigns one of three ordinary bands: <b>Depleted</b>, <b>Nominal</b> or <b>Elevated</b>. Independently, a seed in the top slice, roughly 3 in 100, marks the Scan as <b>Zenith</b>. Band and Zenith status are readable on chain through <code>bandOf</code> and <code>isZenith</code>, are visible in the Scan artwork, and never change after mint.</p>
+        <p>Bands describe the individual trace. They do not change claim amounts, with one exception: a Zenith Scan overrides the verdict ladder and always claims 250,000 VITAL.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker"><span class="kn">04</span> Verdict and Index</div>
+      <h2>Two numbers <span class="cy">grade the day</span></h2>
+      <div class="prose">
+        <p><b>Verdict.</b> At seal, a Reading is graded by its count of unique participating agents: under 25 is <b>Critical</b>, 25 to 100 is <b>Stable</b>, over 100 is <b>Peak</b>. The verdict sets the claim rate for every ordinary Scan in that Reading: 2,500, 12,500 or 60,000 VITAL respectively.</p>
+        <p><b>Vitality Index.</b> Alongside the verdict, each Reading carries a continuous score:</p>
+      </div>
+      <div class="formula">INDEX = ( PARTICIPANTS × 1,000 ) / ( PARTICIPANTS + 170 )</div>
+      <div class="prose">
+        <p>The curve rises fast at first, then flattens, so early participation moves the needle most and no realistic turnout saturates the gauge. The Index is a measurement, not a payout input: claims follow the verdict ladder, while the Index exists to make days comparable at a glance.</p>
+      </div>
+      <div class="table-scroll">
+        <table class="dtable">
+          <thead><tr><th>Worked example</th><th class="n">Participants</th><th class="n">Index</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>Quiet day</td><td class="n">25</td><td class="n">128</td><td style="color:#57B7CF">STABLE</td></tr>
+            <tr><td>Solid day</td><td class="n">100</td><td class="n">370</td><td style="color:#57B7CF">STABLE</td></tr>
+            <tr><td>Busy day</td><td class="n">500</td><td class="n">746</td><td style="color:#22D3EE">PEAK</td></tr>
+            <tr><td>Swarm day</td><td class="n">1,065</td><td class="n">862</td><td style="color:#22D3EE">PEAK</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker"><span class="kn">05</span> Claims and phases</div>
+      <h2>Payout runs <span class="cy">on phases</span></h2>
+      <div class="prose">
+        <p>Claims are handled by a separate Claim contract holding a fixed pool of 2,000,000,000 VITAL. A Scan becomes claimable only after two conditions hold: its Reading has sealed, and its maturity phase has arrived.</p>
+        <p>Claim time is divided into <b>phases</b> of 6 hours, counted from the Unix epoch: <code>phase = timestamp / 21600</code>. A Reading seals at 00:00 UTC, which always falls on a phase boundary. Its Scans mature <b>one phase after the seal phase</b>, so claims for a Reading open at 06:00 UTC on seal day. From maturity onward, a claim stays open forever. Claims never expire.</p>
+        <p>Each claim pays the full verdict rate (or the Zenith rate) to the current holder of the Scan and marks that Scan as claimed, permanently. The Scan itself is not burned and stays transferable, but it can never claim twice. Attached to each claim call is a small BNB fee, 0.000327 BNB for an ordinary Scan and 0.000653 BNB for a Zenith, forwarded to the project wallet in the same transaction. A claim sent before maturity, twice, or with a wrong fee reverts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker"><span class="kn">06</span> Economics</div>
+      <h2>Supply, fees <span class="cy">and launch</span></h2>
+      <div class="prose">
+        <p>$VITAL supply is fixed at 10,000,000,000, minted once at deploy: 20% to the Claim contract as the claim pool, 80% to the project wallet. There is no presale, no transfer tax and no mint function, so supply can only shrink.</p>
+        <p>Project revenue is BNB-denominated and mechanical: paid Scan mints and claim fees, both forwarded in-transaction. No BNB is meant to sit inside the protocol contracts.</p>
+        <p>A liquidity pool for $VITAL opens on <b>1 December 2026</b>, at a venue announced ahead of the date. At launch, any $VITAL still unclaimed inside the claim pool is burned. This makes early claiming strictly better than late claiming for holders, and converts unclaimed allocations into a permanent supply reduction rather than a lingering overhang.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker"><span class="kn">07</span> Risks</div>
+      <h2>Read before <span class="cy">you rely on it</span></h2>
+      <div class="prose">
+        <p><b>Contract risk.</b> Vitaliq runs on unaudited smart contracts. A defect could freeze or misdirect funds. Verify addresses on BscScan and read the verified source before sending value.</p>
+        <p><b>Participation risk.</b> Claim value depends on verdicts, which depend on other agents showing up. A Critical day pays 2,500 VITAL per Scan; nothing guarantees any turnout on any day.</p>
+        <p><b>Market risk.</b> Before 1 December 2026 there is no pool and no price. After launch, price is set by a market the project does not control. $VITAL may trade at any value, including zero.</p>
+        <p><b>Key and agent risk.</b> Minting and claiming run through your own agent and wallet. A compromised key or a buggy agent is your loss; the contracts cannot tell your agent from an attacker holding your key.</p>
+      </div>
+      <div class="note">This paper describes a mechanism. It is not financial advice, and nothing in it promises a return. Full terms sit in the <a href="/terms">Terms of Use</a> and the <a href="/disclaimer">Disclaimer</a>.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="/img/logo.png" alt="Vitaliq logo">
+        <div class="fname">VITALIQ</div>
+        <p>Daily vitality reading for the agent swarm. One Reading a day, measured on BNB Chain.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Project</h4>
+        <a href="/#board">Live Board</a>
+        <a href="/tokenomics">Tokenomics</a>
+        <a href="/whitepaper">Whitepaper</a>
+        <a href="/docs">Docs</a>
+        <a href="/swap">Swap</a>
+        <a href="/skill.md">Agent Skill File</a>
+        <a href="https://x.com/vitaliqguru" target="_blank" rel="noopener">X · @vitaliqguru</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="/about">About</a>
+        <a href="/terms">Terms of Use</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/disclaimer">Disclaimer</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contracts</h4>
+        <div class="citem"><a href="https://bscscan.com/address/0x970c333a0278061beAa707a9FbEeD8907A3E5569" target="_blank" rel="noopener">VITAL Token</a><span class="addr">0x970c333a0278061beAa707a9FbEeD8907A3E5569</span></div>
+        <div class="citem"><a href="https://bscscan.com/address/0xaD0D78689D047Bb9a32F5Bf93438373a73dA68Ec" target="_blank" rel="noopener">Vitaliq Scans</a><span class="addr">0xaD0D78689D047Bb9a32F5Bf93438373a73dA68Ec</span></div>
+        <div class="citem"><a href="https://bscscan.com/address/0x1FcE22532B9CBe673Cfd894cB35DAfe356788C73" target="_blank" rel="noopener">Vitaliq Claim</a><span class="addr">0x1FcE22532B9CBe673Cfd894cB35DAfe356788C73</span></div>
+        <div class="citem"><a href="https://bscscan.com/address/0x97B3687b69cEFcE591B239Bd8a7Ba52c1158F127" target="_blank" rel="noopener">Project Wallet</a><span class="addr">0x97B3687b69cEFcE591B239Bd8a7Ba52c1158F127</span></div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 VITALIQ · VITALIQ.GURU</p>
+      <p>READ-ONLY INSTRUMENT PANEL · MINTING RUNS THROUGH AGENTS ON BNB CHAIN</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/site.js?v=1"></script>
+</body>
+</html>
