@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=2">
+<link rel="stylesheet" href="/css/style.css?v=3">
 </head>
 <body>
 
@@ -27,6 +27,7 @@
       <a href="/docs">Docs</a>
       <a href="/swap">Swap</a>
       <a href="/about">About</a>
+      <span class="idx-chip" id="idxChip">IDX <b>···</b></span>
       <a class="x-link" href="https://x.com/vitaliqguru" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.2l7.3-8.3L1.6 2H8l4.4 5.9L18.9 2zm-1.1 18h1.7L7.1 3.9H5.3L17.8 20z"/></svg>@vitaliqguru</a>
     </nav>
   </div>
@@ -48,6 +49,21 @@
       <div class="split">
         <div class="s-pool">20% · CLAIM POOL</div>
         <div class="s-proj">80% · PROJECT WALLET</div>
+      </div>
+      <div class="donut-wrap">
+        <div class="donut-box">
+          <svg viewBox="0 0 220 220" role="img" aria-label="Supply allocation chart">
+            <circle cx="110" cy="110" r="84" fill="none" stroke="#0D2439" stroke-width="34"/>
+            <circle class="donut-seg" data-seg="proj" cx="110" cy="110" r="84" fill="none" stroke="#22496B" stroke-width="34" stroke-dasharray="422.2 527.8" stroke-dashoffset="-105.6"/>
+            <circle class="donut-seg" data-seg="pool" cx="110" cy="110" r="84" fill="none" stroke="#1593B8" stroke-width="34" stroke-dasharray="105.6 527.8" stroke-dashoffset="0"/>
+          </svg>
+          <div class="donut-c"><div class="dc-n" id="dcN">10,000,000,000</div><div class="dc-l" id="dcL">Total supply · $VITAL</div></div>
+        </div>
+        <div class="donut-legend">
+          <div class="dl-row" data-seg="pool"><span class="sw" style="background:#1593B8"></span><span class="dl-t">Claim pool</span><span class="dl-v">2,000,000,000 · 20%</span></div>
+          <div class="dl-row" data-seg="proj"><span class="sw" style="background:#22496B"></span><span class="dl-t">Project wallet</span><span class="dl-v">8,000,000,000 · 80%</span></div>
+          <p class="small">Hover or tap a segment. Supply was split once at deploy and can never grow: no mint function exists on the token contract.</p>
+        </div>
       </div>
       <div class="table-scroll">
         <table class="dtable">
@@ -116,6 +132,18 @@
         <p><b>Burn.</b> Whatever $VITAL still sits unclaimed in the claim pool at launch gets burned at launch. Claimed tokens are untouched; only the unclaimed remainder is destroyed.</p>
         <p><b>No surprises.</b> Supply cannot grow, the ladder cannot be re-priced per Reading, and claim rules are enforced by the contracts rather than by this website.</p>
       </div>
+      <div class="panel burn-panel">
+        <div class="plabel">Burn simulator · what launch day destroys</div>
+        <p class="prose" style="margin-top:10px;font-size:14.5px">Slide to the share of the claim pool you think stays unclaimed on 1 December 2026. That share burns at launch. Pool figure below starts at the full pool and refines to the live pool balance.</p>
+        <input type="range" class="sim-range" id="burnRange" min="0" max="100" value="40" step="1" aria-label="Unclaimed share at launch" style="margin-top:14px">
+        <div class="sim-marks"><span>0% UNCLAIMED</span><span>50%</span><span>100% UNCLAIMED</span></div>
+        <div class="burn-out">
+          <div class="bo"><div class="bl">Unclaimed share</div><div class="bv cy" id="burnPct">40%</div></div>
+          <div class="bo"><div class="bl">Burned at launch</div><div class="bv" id="burnAmt">800,000,000 VITAL</div></div>
+          <div class="bo"><div class="bl">Pool surviving</div><div class="bv cy" id="burnLeft">1,200,000,000 VITAL</div></div>
+          <div class="bo"><div class="bl">Pool counted</div><div class="bv cy" id="burnPool">2,000,000,000 VITAL</div></div>
+        </div>
+      </div>
       <div class="note gold"><b>Reading this before 1 December 2026?</b> Any $VITAL offered for trade anywhere before the announced pool opens is not from this project. Contract addresses on this page and in the footer are the only real ones.</div>
     </div>
   </section>
@@ -163,6 +191,8 @@
 
 <script src="/js/chain.js?v=1"></script>
 <script src="/js/site.js?v=1"></script>
+<script src="/js/fx.js?v=1"></script>
 <script src="/js/tokenomics.js?v=1"></script>
+<script src="/js/tokenomics2.js?v=1"></script>
 </body>
 </html>

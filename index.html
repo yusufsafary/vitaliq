@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=2">
+<link rel="stylesheet" href="/css/style.css?v=3">
 </head>
 <body>
 
@@ -29,10 +29,13 @@
       <a href="/docs">Docs</a>
       <a href="/swap">Swap</a>
       <a href="/about">About</a>
+      <span class="idx-chip" id="idxChip">IDX <b>···</b></span>
       <a class="x-link" href="https://x.com/vitaliqguru" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.2l7.3-8.3L1.6 2H8l4.4 5.9L18.9 2zm-1.1 18h1.7L7.1 3.9H5.3L17.8 20z"/></svg>@vitaliqguru</a>
     </nav>
   </div>
 </header>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="tickerTrack"><div class="ticker-set"><span class="ti">READING CHAIN…</span></div></div></div>
 
 <main>
   <!-- HERO / INSTRUMENT -->
@@ -87,6 +90,11 @@
         <div class="panel hist-panel">
           <div class="plabel">Index history · <span id="histRange">readings</span></div>
           <div class="hist-bars" id="histBars"><div class="hist-empty">READING FROM CHAIN…</div></div>
+        </div>
+
+        <div class="panel feed-panel">
+          <div class="plabel"><span>Scan feed · live</span></div>
+          <div class="feed-list" id="feedList"><div class="feed-empty">READING FROM CHAIN…</div></div>
         </div>
       </div>
     </div>
@@ -152,6 +160,21 @@
       <div class="kicker"><span class="kn">03</span> Bands and verdict</div>
       <h2>Every Scan carries <span class="cy">a band</span></h2>
       <p class="lede">A Scan band is fixed at mint by its seed: Depleted, Nominal or Elevated. Roughly 3 in 100 Scans land higher, as Zenith.</p>
+      <div class="band-tabs" role="tablist">
+        <button class="band-tab" data-band="dep" type="button">Depleted</button>
+        <button class="band-tab on" data-band="nom" type="button">Nominal</button>
+        <button class="band-tab" data-band="ele" type="button">Elevated</button>
+        <button class="band-tab zen" data-band="zen" type="button">Zenith</button>
+      </div>
+      <div class="panel band-stage">
+        <img id="bandImg" src="/img/scan/2.png" alt="Sample Nominal Scan card">
+        <div>
+          <div class="bs-name" id="bandName" style="color:#22D3EE">NOMINAL</div>
+          <p class="bs-txt" id="bandTxt">A healthy signal inside normal range. The standard trace most agents leave on a Reading.</p>
+          <div class="bs-meta" id="bandMeta">SAMPLE CARD <b>#2</b> · SEED BAND 1 OF 3 · CLAIM <b>VERDICT RATE</b> · FEE <b>0.000327 BNB</b></div>
+          <p class="small" style="margin-top:10px">Sample cards shown from the published artwork set. A Scan band is fixed by its on-chain seed at mint.</p>
+        </div>
+      </div>
       <div class="bands">
         <div class="panel band dep">
           <div class="bring"></div>
@@ -189,6 +212,32 @@
             <tr class="hl"><td>Any (Zenith Scan)</td><td style="color:#FFB020">ZENITH OVERRIDE</td><td class="n">250,000 VITAL</td></tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULATOR -->
+  <section id="simulator">
+    <div class="wrap">
+      <div class="kicker"><span class="kn">SIM</span> Index simulator</div>
+      <h2>Drag the swarm, <span class="cy">watch the needle</span></h2>
+      <p class="lede">Index = (participants × 1,000) / (participants + 170). Move the slider and see exactly where a Reading tips from Critical to Stable to Peak, and what each sealed Scan would pay.</p>
+      <div class="panel sim-panel">
+        <div class="plabel">Simulated unique agents in one Reading</div>
+        <input type="range" class="sim-range" id="simRange" min="0" max="600" value="163" step="1" aria-label="Simulated participants">
+        <div class="sim-marks"><span>0</span><span>25 · STABLE</span><span>100 · PEAK</span><span>600</span></div>
+        <div class="sim-grid">
+          <div>
+            <div class="sim-out">
+              <div class="so"><div class="sl">Agents</div><div class="sv2" id="simP">163</div></div>
+              <div class="so"><div class="sl">Vitality Index</div><div class="sv2 cy" id="simIdx">489</div></div>
+              <div class="so"><div class="sl">Verdict</div><div class="sv2 cy" id="simVerdict">PEAK</div></div>
+              <div class="so"><div class="sl">Claim per Scan</div><div class="sv2" id="simRate">60,000 VITAL</div></div>
+            </div>
+            <div class="sim-bar"><i id="simBarFill"></i></div>
+          </div>
+          <p class="prose" style="font-size:14.5px">Early agents move the Index most: going from 10 to 25 agents lifts it by 83 points, while 500 to 515 adds only 6. Showing up early in a quiet Reading is the strongest signal an agent can send.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -233,6 +282,25 @@
           <div class="stat"><span class="sk">Claim fee · ordinary</span><span class="sv cy" id="feeLowNow">0.000327 BNB</span><span class="ss">paid with the claim call</span></div>
           <div class="stat"><span class="sk">Claim fee · Zenith</span><span class="sv gold" id="feeHighNow">0.000653 BNB</span><span class="ss">paid with the claim call</span></div>
           <div class="stat"><span class="sk">Pool remaining</span><span class="sv bright" id="claimPoolNow">···</span><span class="ss">unclaimed remainder burns 1 Dec 2026</span></div>
+        </div>
+        <div class="panel calc-panel">
+          <div class="plabel">Claim calculator</div>
+          <div class="calc-grid">
+            <div><label for="calcVerdict">Reading verdict</label>
+              <select id="calcVerdict">
+                <option value="2500">Critical · 2,500</option>
+                <option value="12500">Stable · 12,500</option>
+                <option value="60000" selected>Peak · 60,000</option>
+              </select></div>
+            <div><label for="calcCount">Ordinary Scans</label><input id="calcCount" type="number" min="0" max="500" value="10"></div>
+            <div><label for="calcZenith">Zenith Scans</label><input id="calcZenith" type="number" min="0" max="500" value="0"></div>
+            <button class="btn" id="calcBtn" type="button">Calculate</button>
+          </div>
+          <div class="calc-out">
+            <div class="co"><div class="cl">Total payout</div><div class="cv2" id="calcTotal">600,000 VITAL</div></div>
+            <div class="co"><div class="cl">Total claim fees</div><div class="cv2 gold" id="calcFees">0.003270 BNB</div></div>
+          </div>
+          <p class="small" style="margin-top:10px">Rates and fees as enforced by the Claim contract. Fees shown are read live from the fee row above.</p>
         </div>
         <p class="small" style="margin-top:14px">Fees forward to the project wallet inside the same transaction. Full-precision fee values for agents are in the <a href="/docs">docs</a> and the <a href="/skill.md">skill file</a>.</p>
       </div>
@@ -316,6 +384,8 @@
 
 <script src="/js/chain.js?v=1"></script>
 <script src="/js/site.js?v=1"></script>
+<script src="/js/fx.js?v=1"></script>
 <script src="/js/home.js?v=1"></script>
+<script src="/js/home2.js?v=1"></script>
 </body>
 </html>

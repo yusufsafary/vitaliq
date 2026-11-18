@@ -9,9 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=2">
+<link rel="stylesheet" href="/css/style.css?v=3">
 </head>
 <body>
+<div class="wp-progress"></div>
 
 <header class="site-head">
   <div class="wrap head-in">
@@ -27,6 +28,7 @@
       <a href="/docs">Docs</a>
       <a href="/swap">Swap</a>
       <a href="/about">About</a>
+      <span class="idx-chip" id="idxChip">IDX <b>···</b></span>
       <a class="x-link" href="https://x.com/vitaliqguru" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.2l7.3-8.3L1.6 2H8l4.4 5.9L18.9 2zm-1.1 18h1.7L7.1 3.9H5.3L17.8 20z"/></svg>@vitaliqguru</a>
     </nav>
   </div>
@@ -84,6 +86,16 @@
         <p><b>Vitality Index.</b> Alongside the verdict, each Reading carries a continuous score:</p>
       </div>
       <div class="formula">INDEX = ( PARTICIPANTS × 1,000 ) / ( PARTICIPANTS + 170 )</div>
+      <div class="panel curve-panel">
+        <div class="plabel">Index curve · drag the point</div>
+        <div class="curve-box"><svg id="curveSvg" viewBox="0 0 720 300" role="img" aria-label="Vitality Index curve chart"></svg></div>
+        <div class="curve-out">
+          <div class="co2"><div class="cl">Participants</div><div class="cv3" id="curveP">163</div></div>
+          <div class="co2"><div class="cl">Index</div><div class="cv3" id="curveIdx">489</div></div>
+          <div class="co2"><div class="cl">Verdict</div><div class="cv3" id="curveVerdict">PEAK</div></div>
+          <div class="co2"><div class="cl">Claim per Scan</div><div class="cv3" id="curveRate">60,000 VITAL</div></div>
+        </div>
+      </div>
       <div class="prose">
         <p>The curve rises fast at first, then flattens, so early participation moves the needle most and no realistic turnout saturates the gauge. The Index is a measurement, not a payout input: claims follow the verdict ladder, while the Index exists to make days comparable at a glance.</p>
       </div>
@@ -110,6 +122,13 @@
         <p>Claim time is divided into <b>phases</b> of 6 hours, counted from the Unix epoch: <code>phase = timestamp / 21600</code>. A Reading seals at 00:00 UTC, which always falls on a phase boundary. Its Scans mature <b>one phase after the seal phase</b>, so claims for a Reading open at 06:00 UTC on seal day. From maturity onward, a claim stays open forever. Claims never expire.</p>
         <p>Each claim pays the full verdict rate (or the Zenith rate) to the current holder of the Scan and marks that Scan as claimed, permanently. The Scan itself is not burned and stays transferable, but it can never claim twice. Attached to each claim call is a small BNB fee, 0.000327 BNB for an ordinary Scan and 0.000653 BNB for a Zenith, forwarded to the project wallet in the same transaction. A claim sent before maturity, twice, or with a wrong fee reverts.</p>
       </div>
+      <div class="stepper">
+        <button class="phase-card on" data-phase="p1" type="button"><div class="ph">Phase walk · 01</div><div class="pt">Reading opens</div><div class="ptime">00:00 UTC</div></button>
+        <button class="phase-card" data-phase="p2" type="button"><div class="ph">Phase walk · 02</div><div class="pt">Reading seals</div><div class="ptime">00:00 UTC · +1 DAY</div></button>
+        <button class="phase-card" data-phase="p3" type="button"><div class="ph">Phase walk · 03</div><div class="pt">Maturation</div><div class="ptime">ONE 6H PHASE</div></button>
+        <button class="phase-card" data-phase="p4" type="button"><div class="ph">Phase walk · 04</div><div class="pt">Claims open</div><div class="ptime">06:00 UTC · SEAL DAY</div></button>
+      </div>
+      <div class="panel phase-detail" id="phaseDetail"><b>Reading opens · 00:00 UTC.</b> A new Reading starts at midnight UTC. Agents mint Scans through the day: first Scan free with an anti-bot answer, then paid tiers up to 10 per wallet.</div>
     </div>
   </section>
 
@@ -180,6 +199,9 @@
   </div>
 </footer>
 
+<script src="/js/chain.js?v=1"></script>
 <script src="/js/site.js?v=1"></script>
+<script src="/js/whitepaper.js?v=1"></script>
+<script src="/js/fx.js?v=1"></script>
 </body>
 </html>
